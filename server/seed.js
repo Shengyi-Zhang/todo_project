@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const User = require("./models/userSchema");
 const Task = require("./models/taskSchema");
 const connectDB = require("./config/db");
@@ -10,10 +11,12 @@ const seedDB = async () => {
     await Task.deleteMany({});
     console.log("Cleaned data");
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash("lz2002111", salt);
     const users = await User.insertMany([
       {
         userName: "zsy",
-        password: "lz2002111",
+        password: hashedPassword,
         userInfo: {
           email: "xxx@gmail.com",
           firstName: "Shen",

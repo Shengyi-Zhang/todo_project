@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 dotenv.config();
 
 const taskRoutes = require("./routers/taskRoutes");
+const authRoutes = require("./routers/authRoutes");
 
 const app = express();
 app.use(cookieParser());
@@ -14,6 +15,7 @@ const PORT = process.env.PORT;
 
 app.use(cors());
 app.use("/todo", taskRoutes);
+app.use("/auth", authRoutes);
 
 const startServer = async () => {
   try {
