@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const User = require("./models/userSchema");
-const Todo = require("./models/todoSchema");
+const Task = require("./models/taskSchema");
 const connectDB = require("./config/db");
 
 connectDB();
 const seedDB = async () => {
   try {
     await User.deleteMany({});
-    await Todo.deleteMany({});
+    await Task.deleteMany({});
     console.log("Cleaned data");
 
     const users = await User.insertMany([
@@ -22,7 +22,7 @@ const seedDB = async () => {
       },
     ]);
 
-    const todos = await Todo.insertMany([
+    const todos = await Task.insertMany([
       {
         userId: users[0]._id,
         title: "First todo",

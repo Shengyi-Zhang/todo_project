@@ -2,15 +2,18 @@ const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 dotenv.config();
 
+const taskRoutes = require("./routers/taskRoutes");
+
 const app = express();
+app.use(cookieParser());
+app.use(express.json());
 const PORT = process.env.PORT;
 
 app.use(cors());
-app.get("/", (req, res) => {
-  res.send("Server is running");
-});
+app.use("/todo", taskRoutes);
 
 const startServer = async () => {
   try {
