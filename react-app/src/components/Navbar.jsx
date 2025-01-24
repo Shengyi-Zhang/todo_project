@@ -16,16 +16,12 @@ const Navbar = () => {
     <AppBar position="sticky">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-            MyApp
-          </Link>
-
           {user && (
             <Link
-              to="/dashboard"
+              to="/todopage"
               style={{ color: "inherit", textDecoration: "none" }}
             >
-              Dashboard
+              Todos
             </Link>
           )}
         </Typography>

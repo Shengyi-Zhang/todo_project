@@ -3,7 +3,8 @@ const Task = require("../models/taskSchema");
 
 exports.getTask = async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const userId = req.user.id;
+    const tasks = await Task.find({ userId });
 
     if (!tasks) return res.status(404).json({ message: "No tasks found" });
 
@@ -42,7 +43,7 @@ exports.updateTask = async (req, res) => {
 
 exports.createTask = async (req, res) => {
   try {
-    const userId = req.cookies.userId;
+    const userId = req.user.id;
     const { title, desc } = req.body;
 
     const newTask = new Task({
