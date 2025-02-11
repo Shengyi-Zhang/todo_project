@@ -1,4 +1,4 @@
 # todo_project
-Fill up the .env file listed in todo_project/server.
+Fill up the .env file listed in todo_project/server.<br>
 Open two terminal, run "node server.js" in todo_project/server and "npm run dev" in todo_project/react-app.
 
