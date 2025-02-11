@@ -25,7 +25,7 @@ const Login = () => {
 
       login({ userName }, token);
 
-      navigate("/");
+      navigate("/todopage");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed.");
     }
@@ -63,12 +63,7 @@ const Login = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleLogin}
-        fullWidth
-      >
+      <Button variant="contained" onClick={handleLogin} fullWidth>
         Login
       </Button>
     </Box>

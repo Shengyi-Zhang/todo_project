@@ -1,11 +1,20 @@
 import React, { useState, useContext } from "react";
-import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import {
+  Modal,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
 import { TodoContext } from "./TodoContext";
 
 const TodoModal = ({ todo, open, onClose }) => {
-  const { updateTodos } = useContext(TodoContext);
+  const { updateTodos, deleteTodo } = useContext(TodoContext);
   const [isEditing, setIsEditing] = useState(false);
   const [editableDesc, setEditableDesc] = useState(todo.desc);
+  const [completed, setCompleted] = useState(todo.completed);
 
   const style = {
     position: "absolute",
@@ -29,6 +38,18 @@ const TodoModal = ({ todo, open, onClose }) => {
 
   const handleDescChange = (e) => {
     setEditableDesc(e.target.value);
+  };
+
+  const handleToggleCompleted = async () => {
+    const newCompletedStatus = !completed;
+    console.log(newCompletedStatus);
+    setCompleted(newCompletedStatus);
+    await updateTodos(todo._id, { ...todo, completed: newCompletedStatus });
+  };
+
+  const handleDelete = async () => {
+    await deleteTodo(todo._id);
+    onClose();
   };
 
   return (
@@ -59,25 +80,25 @@ const TodoModal = ({ todo, open, onClose }) => {
           </Typography>
         )}
 
-        <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-          <strong>Status:</strong> {todo.completed ? "Completed" : "Pending"}
-        </Typography>
+        <FormControlLabel
+          control={
+            <Switch checked={completed} onChange={handleToggleCompleted} />
+          }
+          label={completed ? "Completed" : "Pending"}
+        />
+
         <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
           <strong>Created At:</strong>{" "}
           {new Date(todo.createdAt).toLocaleString()}
         </Typography>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-          <Button
-            variant="contained"
-            color={isEditing ? "primary" : "secondary"}
-            onClick={handleEditClick}
-          >
+          <Button variant="contained" onClick={handleEditClick}>
             {isEditing ? "Save" : "Edit"}
           </Button>
 
-          <Button variant="outlined" color="error" onClick={onClose}>
-            Close
+          <Button variant="contained" color="error" onClick={handleDelete}>
+            Delete
           </Button>
         </Box>
       </Box>

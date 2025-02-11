@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { TodoContext } from "./TodoContext";
 
 export const AuthContext = createContext();
 
@@ -7,11 +8,16 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { fetchTodos } = useContext(TodoContext);
 
   const login = (userData, jwtToken) => {
     setUser(userData);
     setToken(jwtToken);
     localStorage.setItem("token", jwtToken);
+
+    setTimeout(() => {
+      fetchTodos(jwtToken);
+    }, 0);
   };
 
   const logout = () => {

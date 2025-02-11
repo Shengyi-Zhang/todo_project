@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TodoContext } from "../components/TodoContext";
+import { AuthContext } from "../components/AuthContext";
 import TodoModal from "../components/TodoModal";
 import { Masonry } from "@mui/lab";
 import {
@@ -7,16 +8,20 @@ import {
   Typography,
   Card,
   CardContent,
-  Button,
   CircularProgress,
 } from "@mui/material";
 import AddTodoForm from "../components/AddTodoForm";
 
 const TodoPage = () => {
-  const { todos, loading, error } = useContext(TodoContext);
+  const { todos, loading, error, fetchTodos } = useContext(TodoContext);
+  const { user } = useContext(AuthContext);
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  useEffect(() => {
+    if (user) {
+      fetchTodos();
+    }
+  }, [user, fetchTodos]);
   const handleTodoClick = (todo) => {
     setSelectedTodo(todo);
     setIsModalOpen(true);

@@ -20,12 +20,13 @@ exports.getTask = async (req, res) => {
 
 exports.updateTask = async (req, res) => {
   try {
-    const { desc } = req.body;
+    const { desc, completed } = req.body;
     const { taskId } = req.params;
 
     const task = await Task.findById(taskId);
     if (!task) return res.status(404).json({ message: "Task not found" });
 
+    task.completed = completed;
     task.desc = desc;
     task.updatedAt = Date.now();
     await task.save();

@@ -44,13 +44,7 @@ const AddTodoForm = () => {
           rows={4}
           required
         />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ marginTop: 2 }}
-        >
+        <Button type="submit" variant="contained" color="primary" fullWidth>
           Add Todo
         </Button>
       </form>
